@@ -91,9 +91,40 @@ List(1, 2, 3, 4)?.length
 
 //Problem five
 extension List {
-    func reverse() {
-        
+    func reverse() -> List<T> {
+        var newList = self
+        let currentNode = self
+        while let nextNode = currentNode.nextItem {
+            currentNode.nextItem = nextNode.nextItem
+            nextNode.nextItem = newList
+            newList = nextNode
+        }
+        return newList
     }
 }
 
 List(1, 2, 3, 4)?.reverse()
+
+
+//Problem six
+extension List where T:Equatable {
+    func isPalindrome() -> Bool {
+        var original = self
+        var reversed = self.reverse()
+        guard original.value == reversed.value else { return false }
+        while let nextOriginal = original.nextItem, let nextReversed = reversed.nextItem {
+            original = nextOriginal
+            reversed = nextReversed
+            guard original.value == reversed.value else { return false }
+        }
+        return true
+    }
+}
+
+List(1, 2, 3, 2, 1)?.isPalindrome()
+
+
+//Problem seven
+extension List {
+    
+}
